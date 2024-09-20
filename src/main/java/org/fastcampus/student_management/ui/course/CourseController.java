@@ -61,6 +61,7 @@ public class CourseController {
   }
 
   private int getCourseFee() {
+
     while (true) {
       coursePresenter.showInputCourseFee();
       try {

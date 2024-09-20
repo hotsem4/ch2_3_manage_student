@@ -4,45 +4,47 @@ import org.fastcampus.student_management.domain.Course;
 import org.fastcampus.student_management.domain.DayOfWeek;
 
 public class CourseInfoDto {
-  private final String courseName;
-  private final int fee;
-  private final DayOfWeek dayOfWeek;
-  private final String studentName;
-  private final Long courseTime;
 
-  public CourseInfoDto(String courseName, int fee, String dayOfWeek, String studentName, Long courseTime) {
-    this.courseName = courseName;
-    this.fee = fee;
-    this.dayOfWeek = DayOfWeek.valueOf(dayOfWeek);
-    this.studentName = studentName;
-    this.courseTime = courseTime;
-  }
+    private final String courseName;
+    private final int fee;
+    private final DayOfWeek dayOfWeek;
+    private final String studentName;
+    private final Long courseTime;
 
-  public CourseInfoDto(Course course) {
-    this.courseName = course.getCourseName();
-    this.fee = course.getFee();
-    this.dayOfWeek = course.getDayOfWeek();
-    this.studentName = course.getStudentName();
-    this.courseTime = course.getCourseTime();
-  }
+    public CourseInfoDto(String courseName, int fee, String dayOfWeek, String studentName,
+        Long courseTime) {
+        this.courseName = courseName;
+        this.fee = fee;
+        this.dayOfWeek = DayOfWeek.valueOf(dayOfWeek);
+        this.studentName = studentName;
+        this.courseTime = courseTime;
+    }
 
-  public String getCourseName() {
-    return courseName;
-  }
+    public CourseInfoDto(Course course) {
+        this.courseName = course.getCourseName();
+        this.fee = course.getFee();
+        this.dayOfWeek = course.getDayOfWeek();
+        this.studentName = course.getStudentName();
+        this.courseTime = course.getCourseTime();
+    }
 
-  public int getFee() {
-    return fee;
-  }
+    public String getCourseName() {
+        return courseName;
+    }
 
-  public DayOfWeek getDayOfWeek() {
-    return dayOfWeek;
-  }
+    public int getFee() {
+        return fee;
+    }
 
-  public String getStudentName() {
-    return studentName;
-  }
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
 
-  public Long getCourseTime() {
-    return courseTime;
-  }
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public Long getCourseTime() {
+        return courseTime;
+    }
 }
