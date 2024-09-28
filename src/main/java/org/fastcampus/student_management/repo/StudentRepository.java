@@ -1,6 +1,7 @@
 package org.fastcampus.student_management.repo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.fastcampus.student_management.domain.Student;
@@ -15,5 +16,9 @@ public class StudentRepository {
 
     public Optional<Student> findByName(String name) {
         return Optional.ofNullable(studentMap.get(name));
+    }
+
+    public Student getStudents(String name) {
+        return findByName(name).orElseThrow(IllegalArgumentException::new);
     }
 }

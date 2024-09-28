@@ -3,13 +3,13 @@ package org.fastcampus.student_management.ui.course;
 import java.util.List;
 import java.util.Scanner;
 import org.fastcampus.student_management.application.course.CourseService;
-import org.fastcampus.student_management.application.course.dto.CourseInfoDto;
+import org.fastcampus.student_management.domain.dto.CourseInfoDto;
 import org.fastcampus.student_management.domain.DayOfWeek;
 import org.fastcampus.student_management.ui.student.StudentPresenter;
 
 public class CourseController {
 
-  private final CoursePresenter coursePresenter;
+  private final CoursePresenter coursePresenter;  // 출력을 해주는 역할
   private final CourseService courseService;
   private final StudentPresenter studentPresenter;
   private final Scanner scanner = new Scanner(System.in);

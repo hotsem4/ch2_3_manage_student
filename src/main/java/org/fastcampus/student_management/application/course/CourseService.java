@@ -1,29 +1,32 @@
 package org.fastcampus.student_management.application.course;
 
-import java.util.ArrayList;
 import java.util.List;
-import org.fastcampus.student_management.application.course.dto.CourseInfoDto;
-import org.fastcampus.student_management.application.student.StudentService;
+import org.fastcampus.student_management.domain.dto.CourseInfoDto;
+import org.fastcampus.student_management.application.course.interfaces.CourseCommandRepository;
+import org.fastcampus.student_management.application.course.interfaces.CourseQueryRepository;
 import org.fastcampus.student_management.domain.Course;
 import org.fastcampus.student_management.domain.CourseList;
 import org.fastcampus.student_management.domain.DayOfWeek;
 import org.fastcampus.student_management.domain.Student;
-import org.fastcampus.student_management.repo.CourseRepository;
+import org.fastcampus.student_management.repo.CourseCommandRepositoryImpl;
+import org.fastcampus.student_management.repo.StudentRepository;
 
 public class CourseService {
 
-    private final CourseRepository courseRepository;
-    private final StudentService studentService;
+    private final CourseCommandRepository courseRepository;
+    private final CourseQueryRepository courseQueryRepository;
+    private final StudentRepository studentRepository;
 
-    public CourseService(CourseRepository courseRepository, StudentService studentService) {
+    public CourseService(CourseCommandRepositoryImpl courseRepository,
+        CourseQueryRepository courseQueryRepository, StudentRepository studentRepository) {
         this.courseRepository = courseRepository;
-        this.studentService = studentService;
+        this.courseQueryRepository = courseQueryRepository;
+        this.studentRepository = studentRepository;
     }
 
     public void registerCourse(CourseInfoDto courseInfoDto) {
-        Student student = studentService.getStudent(courseInfoDto.getStudentName());
-        Course course = new Course(student, courseInfoDto.getCourseName(), courseInfoDto.getFee(),
-            courseInfoDto.getDayOfWeek(), courseInfoDto.getCourseTime());
+        Student student = studentRepository.getStudents(courseInfoDto.getStudentName());
+        Course course = new Course(student, courseInfoDto);
         courseRepository.save(course);
     }
 
@@ -39,7 +42,7 @@ public class CourseService {
 //        return courseInfoDtos;
 //    }
 public List<CourseInfoDto> getCourseDayOfWeek(DayOfWeek dayOfWeek) {
-    List<Course> courses = courseRepository.getCourseDayOfWeek(dayOfWeek);
+    List<Course> courses = courseQueryRepository.getCourseDayOfWeek(dayOfWeek);
     return courses.stream()
         .filter(Course::isActivateUser) // 학생이 활성화 된 경우에만
         .map(CourseInfoDto::new) // Course 객체를 CourseInfoDto로 변환시켜
@@ -58,7 +61,7 @@ public List<CourseInfoDto> getCourseDayOfWeek(DayOfWeek dayOfWeek) {
 //        courseRepository.saveCourses(courseListByStudent);
 //    }
     public void changeFee(String studentName, int fee) {
-        List<Course> courses = courseRepository.getCourseListByStudent(studentName);
+        List<Course> courses = courseQueryRepository.getCourseListByStudent(studentName);
         CourseList courseList = new CourseList(courses);
         courseList.changeAllCoursesFee(fee);
     }
